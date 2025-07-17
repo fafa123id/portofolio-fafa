@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Github, Linkedin, Mail, Briefcase, GraduationCap, Users, Award, Code, Brain } from 'lucide-react';
 import { FaLaravel, FaJava, FaHtml5, FaCss3Alt, FaJsSquare, FaPhp } from "react-icons/fa";
-import { SiMysql } from "react-icons/si";
+import { GrMysql } from "react-icons/gr";
 import Image from 'next/image';
 
 // Data Konten (Content Data)
@@ -26,7 +26,7 @@ const content = {
         title: "Keahlian Teknis",
         list: [
           { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
-          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: SiMysql}, { name: "Java", icon: FaJava}
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava}
         ]
       },
       soft: { title: "Keahlian Interpersonal", list: ["Pemecahan Masalah", "Pemikiran Kritis", "Kerja Sama Tim", "Komunikasi Efektif"] }
@@ -52,7 +52,7 @@ const content = {
         title: "Technical Skills",
         list: [
           { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
-          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: SiMysql}, { name: "Java", icon: FaJava}
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava}
         ]
       },
       soft: { title: "Soft Skills", list: ["Problem Solving", "Critical Thinking", "Teamwork", "Effective Communication"] }
@@ -177,7 +177,7 @@ const Hero = ({ content }) => (
                 alt="Foto Profil Ahmad Fauzan Roziqin" 
                 width={160}
                 height={160}
-                className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl"
+                className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50"
                 onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/160x160/1a202c/a0aec0?text=AFR'; }}
             />
             <h2 className="text-2xl md:text-3xl text-cyan-400 font-light">{content.greeting}</h2>
@@ -280,7 +280,7 @@ const Skills = ({ content }) => (
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-center">
             {content.hard.list.map((skill) => (
               <div key={skill.name} className="group flex flex-col items-center p-4 bg-gray-700/50 rounded-lg transition-all duration-300 hover:bg-gray-700 hover:shadow-lg hover:shadow-cyan-500/10 transform hover:-translate-y-2">
-                <skill.Icon />
+                <skill.icon />
                 <p className="mt-2 text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{skill.name}</p>
               </div>
             ))}
@@ -335,7 +335,8 @@ export default function App() {
   const [language, setLanguage] = useState('en');
   const [activeSection, setActiveSection] = useState('home');
   const currentContent = content[language];
-  
+  const isNavigating = useRef(false);
+  const scrollTimeout = useRef(null); 
   // Effect to scroll to top on page refresh
   useEffect(() => {
     // This forces the page to scroll to the top on refresh
@@ -343,37 +344,35 @@ export default function App() {
   }, []);
 
   // Effect to track which section is active in the viewport
-  useEffect(() => {
-    const sectionIds = Object.keys(currentContent.nav);
-    const observers = [];
-
-    sectionIds.forEach(id => {
-      const element = document.getElementById(id);
-      if (!element) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(id);
-          }
-        },
-        {
-          root: null,
-          // Membuat "zona aktivasi" horizontal di tengah layar (40% dari tinggi viewport).
-          // Bagian menjadi aktif saat memasuki zona ini.
-          rootMargin: "-30% 0px -30% 0px",
-          // Memicu segera setelah bagian mana pun memasuki zona aktivasi.
-          threshold: 0
-        }
-      );
+   useEffect(() => {
+    const handleIntersection = (entries) => {
+      // Jika kita sedang navigasi via klik, JANGAN lakukan apa-apa
+      if (isNavigating.current) {
+        return;
+      }
       
-      observer.observe(element);
-      observers.push({ element, observer });
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: "-40% 0px -40% 0px", // Zona aktivasi sedikit diperlebar
+      threshold: 0,
+    });
+
+    const sections = Object.keys(currentContent.nav).map(id => document.getElementById(id));
+    
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
     });
 
     return () => {
-      observers.forEach(({ observer }) => {
-        observer.disconnect();
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
       });
     };
   }, [currentContent.nav]);
@@ -386,7 +385,7 @@ export default function App() {
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
       
-      <Header lang={language} setLang={setLanguage} content={currentContent} activeSection={activeSection} />
+      <Header lang={language} setLang={setLanguage} content={currentContent} activeSection={activeSection} setActiveSection={setActiveSection} isNavigating={isNavigating} scrollTimeout={scrollTimeout} />
       
       {/* Main content area is now a simple relative container */}
       <main className="relative z-10">
