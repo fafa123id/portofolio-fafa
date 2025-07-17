@@ -172,7 +172,7 @@ const SectionWrapper = ({ id, children, className = '' }) => {
 const Hero = ({ content }) => (
     <SectionWrapper id="home" className="h-screen"> {/* Hero can remain h-screen for full viewport intro */}
         <div className="text-center container mx-auto z-10">
-            <image
+            <Image
                 src={content.profileImage} 
                 alt="Foto Profil Ahmad Fauzan Roziqin" 
                 width={160}
