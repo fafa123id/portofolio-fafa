@@ -212,7 +212,7 @@ const About = ({ content }) => (
 
 const Experience = ({ content }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const icons = [<Briefcase size={20}/>, <Users size={20}/>, <Award size={20}/>];
+  const icons = [Briefcase, Users, Award];
 
   const renderContent = () => {
     const data = [content.projects, content.organizations, content.volunteers][activeTab];
@@ -234,16 +234,19 @@ const Experience = ({ content }) => {
         <h2 className="text-4xl font-bold text-center mb-4 text-white">{content.title}</h2>
         <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
         <div className="flex justify-center mb-8 border-b border-gray-700">
-          {content.tabs.map((tab, index) => (
+          {content.tabs.map((tab, index) => {
+            const Icon = icons[index];
+            return(
             <button
               key={index}
               onClick={() => setActiveTab(index)}
               className={`flex items-center space-x-2 px-4 md:px-6 py-3 text-sm md:text-base font-medium transition-all duration-300 focus:outline-none ${activeTab === index ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-t-md'}`}
             >
-              {icons[index]}
+              <Icon size={20} />
               <span>{tab}</span>
             </button>
-          ))}
+            );
+        })}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {renderContent()}
