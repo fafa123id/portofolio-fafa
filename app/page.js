@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Github, Linkedin, Mail, Briefcase, GraduationCap, Users, Award, Code, Brain } from 'lucide-react';
 import { FaLaravel, FaJava, FaHtml5, FaCss3Alt, FaJsSquare, FaPhp } from "react-icons/fa";
 import { SiMysql } from "react-icons/si";
-
+import Image from 'next/image';
 
 // Data Konten (Content Data)
 const content = {
@@ -25,8 +25,8 @@ const content = {
       hard: {
         title: "Keahlian Teknis",
         list: [
-          { name: "HTML5", icon: <FaHtml5 /> }, { name: "CSS3", icon: <FaCss3Alt /> }, { name: "JavaScript", icon: <FaJsSquare /> },
-          { name: "PHP", icon: <FaPhp /> }, { name: "Laravel", icon: <FaLaravel /> }, { name: "MySQL", icon: <SiMysql /> }, { name: "Java", icon: <FaJava /> }
+          { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: SiMysql}, { name: "Java", icon: FaJava}
         ]
       },
       soft: { title: "Keahlian Interpersonal", list: ["Pemecahan Masalah", "Pemikiran Kritis", "Kerja Sama Tim", "Komunikasi Efektif"] }
@@ -51,8 +51,8 @@ const content = {
       hard: {
         title: "Technical Skills",
         list: [
-          { name: "HTML5", icon: <FaHtml5 /> }, { name: "CSS3", icon: <FaCss3Alt /> }, { name: "JavaScript", icon: <FaJsSquare /> },
-          { name: "PHP", icon: <FaPhp /> }, { name: "Laravel", icon: <FaLaravel /> }, { name: "MySQL", icon: <SiMysql /> }, { name: "Java", icon: <FaJava /> }
+          { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: SiMysql}, { name: "Java", icon: FaJava}
         ]
       },
       soft: { title: "Soft Skills", list: ["Problem Solving", "Critical Thinking", "Teamwork", "Effective Communication"] }
@@ -172,9 +172,11 @@ const SectionWrapper = ({ id, children, className = '' }) => {
 const Hero = ({ content }) => (
     <SectionWrapper id="home" className="h-screen"> {/* Hero can remain h-screen for full viewport intro */}
         <div className="text-center container mx-auto z-10">
-            <img 
+            <image
                 src={content.profileImage} 
                 alt="Foto Profil Ahmad Fauzan Roziqin" 
+                width={160}
+                height={160}
                 className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl"
                 onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/160x160/1a202c/a0aec0?text=AFR'; }}
             />
@@ -278,7 +280,7 @@ const Skills = ({ content }) => (
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-center">
             {content.hard.list.map((skill) => (
               <div key={skill.name} className="group flex flex-col items-center p-4 bg-gray-700/50 rounded-lg transition-all duration-300 hover:bg-gray-700 hover:shadow-lg hover:shadow-cyan-500/10 transform hover:-translate-y-2">
-                {skill.icon}
+                <skill.Icon />
                 <p className="mt-2 text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{skill.name}</p>
               </div>
             ))}
