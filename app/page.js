@@ -10,7 +10,7 @@ import Image from 'next/image';
 const content = {
   id: {
     nav: { home: "Beranda", about: "Tentang", experience: "Pengalaman", education: "Pendidikan", skills: "Keahlian", contact: "Kontak" },
-    hero: { profileImage: "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png", greeting: "Halo, saya", name: "Ahmad Fauzan Roziqin", title: "Pengembang Web & Mahasiswa Teknik Informatika", description: "Mahasiswa semester 7 di Universitas Brawijaya dengan IPK 3.79. Berpengalaman dalam pengembangan perangkat lunak dengan fokus pada aplikasi web fungsional dan intuitif.", button: "Hubungi Saya" },
+    hero: { profileImage: "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png", greeting: "Halo, saya", name: "Ahmad Fauzan Roziqin", title: "Pengembang Web & Mahasiswa Teknik Informatika", description: "Mahasiswa semester 7 di Universitas Brawijaya dengan IPK 3.85. Berpengalaman dalam pengembangan perangkat lunak dengan fokus pada aplikasi web fungsional dan intuitif.", button: "Hubungi Saya" },
     about: { title: "Tentang Saya", description: "Saya adalah mahasiswa Teknik Informatika di Universitas Brawijaya yang bersemangat tentang pengembangan perangkat lunak, terutama dalam pembuatan website. Melalui berbagai proyek akademis, saya telah mengasah kemampuan untuk berkolaborasi dalam tim untuk menciptakan aplikasi web yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang baik. Saya selalu antusias untuk belajar teknologi baru dan menerapkan keterampilan saya untuk memecahkan masalah di dunia nyata." },
     experience: {
       title: "Pengalaman Profesional",
@@ -19,7 +19,7 @@ const content = {
       organizations: [ { title: "K-Risma - Universitas Brawijaya", role: "Staff DKV (Desain Komunikasi Visual)", year: "2023-2024", description: "Bertanggung jawab merancang materi visual untuk promosi acara, seperti poster, banner, dan grafis media sosial. Berkolaborasi dalam tim untuk mengembangkan konsep kreatif yang sesuai dengan identitas acara." } ],
       volunteers: [ { title: "Program Kerja HOLOGY 7.0 - BEM Filkom UB", role: "Staff Equipment", year: "2024", description: "Menyediakan dan mengelola peralatan yang dibutuhkan selama acara. Menyusun inventaris dan berkoordinasi dengan tim untuk memastikan penggunaan peralatan yang efisien." }, { title: "Program Kerja Code 2023 - KRISMA, UB", role: "Staff DDM (Dokumentasi, Dekorasi, Multimedia)", year: "2023", description: "Bertanggung jawab dalam dokumentasi seluruh rangkaian program kerja dan mengembangkan konsep kreatif untuk materi desain foto dan video publikasi." } ]
     },
-    education: { title: "Pendidikan", institution: "Universitas Brawijaya", major: "Teknik Informatika", year: "2022 - Sekarang", gpa: "IPK: 3.79 / 4.00" },
+    education: { title: "Pendidikan", institution: "Universitas Brawijaya", major: "Teknik Informatika", year: "2022 - Sekarang", gpa: "IPK: 3.85 / 4.00" },
     skills: {
       title: "Kompetensi Inti",
       hard: {
@@ -36,7 +36,7 @@ const content = {
   },
   en: {
     nav: { home: "Home", about: "About", experience: "Experience", education: "Education", skills: "Skills", contact: "Contact" },
-    hero: { profileImage: "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png", greeting: "Hello, I'm", name: "Ahmad Fauzan Roziqin", title: "Web Developer & Informatics Engineering Student", description: "7th-semester student at Brawijaya University with a 3.79 GPA. Experienced in software development with a focus on functional and intuitive web applications.", button: "Contact Me" },
+    hero: { profileImage: "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png", greeting: "Hello, I'm", name: "Ahmad Fauzan Roziqin", title: "Web Developer & Informatics Engineering Student", description: "7th-semester student at Brawijaya University with a 3.85 GPA. Experienced in software development with a focus on functional and intuitive web applications.", button: "Contact Me" },
     about: { title: "About Me", description: "I am an Informatics Engineering student at Brawijaya University, passionate about software development, especially in web creation. Through various academic projects, I have honed my ability to collaborate in a team to create web applications that are not only functional but also provide a great user experience. I am always enthusiastic about learning new technologies and applying my skills to solve real-world problems." },
     experience: {
       title: "Professional Experience",
@@ -45,7 +45,7 @@ const content = {
       organizations: [ { title: "K-Risma - Brawijaya University", role: "Visual Communication Design Staff", year: "2023-2024", description: "Responsible for designing visual materials for event promotion (posters, banners, social media graphics). Collaborated with the team to develop creative concepts aligned with the event's identity." } ],
       volunteers: [ { title: "HOLOGY 7.0 Work Program - BEM Filkom UB", role: "Equipment Staff", year: "2024", description: "Provided and managed the necessary equipment during the event. Compiled an equipment inventory and coordinated with the team to ensure efficient usage." }, { title: "Code 2023 Work Program - KRISMA, UB", role: "Documentation, Decoration, Multimedia Staff", year: "2023", description: "Responsible for documenting the entire work program and developing creative concepts for photo and video publication materials." } ]
     },
-    education: { title: "Education", institution: "Brawijaya University", major: "Informatics Engineering", year: "2022 - Present", gpa: "GPA: 3.79 / 4.00" },
+    education: { title: "Education", institution: "Brawijaya University", major: "Informatics Engineering", year: "2022 - Present", gpa: "GPA: 3.85 / 4.00" },
     skills: {
       title: "Core Competencies",
       hard: {
