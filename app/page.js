@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Github, Linkedin, Mail, Briefcase, GraduationCap, Users, Award, Code, Brain } from 'lucide-react';
-import { FaLaravel, FaJava, FaHtml5, FaCss3Alt, FaJsSquare, FaPhp } from "react-icons/fa";
+import { FaLaravel, FaJava, FaHtml5, FaCss3Alt, FaJsSquare, FaPhp, FaDocker, FaJenkins } from "react-icons/fa";
 import { GrMysql } from "react-icons/gr";
 import Image from 'next/image';
 
@@ -31,7 +31,7 @@ const content = {
       },
       soft: { title: "Keahlian Interpersonal", list: ["Pemecahan Masalah", "Pemikiran Kritis", "Kerja Sama Tim", "Komunikasi Efektif"] }
     },
-    contact: { title: "Mari Terhubung", description: "Saya terbuka untuk diskusi, kolaborasi, atau peluang kerja. Jangan ragu untuk menghubungi saya.", email: "ahmadfauzanroziqin@gmail.com", phone: "+62 823 3476 3809" },
+    contact: { title: "Mari Terhubung", description: "Saya terbuka untuk diskusi, kolaborasi, atau peluang kerja. Jangan ragu untuk menghubungi saya.", email: "ahmadfauzanroziqin@gmail.com", phone: "+6287805985892" },
     footer: "Dibuat dengan ❤️ oleh Ahmad Fauzan Roziqin"
   },
   en: {
@@ -52,7 +52,8 @@ const content = {
         title: "Technical Skills",
         list: [
           { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
-          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava}
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava},
+          { name: "Docker", icon: FaDocker }, { name: "Jenkins", icon: FaJenkins }
         ]
       },
       soft: { title: "Soft Skills", list: ["Problem Solving", "Critical Thinking", "Teamwork", "Effective Communication"] }
