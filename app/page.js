@@ -26,7 +26,8 @@ const content = {
         title: "Keahlian Teknis",
         list: [
           { name: "HTML5", icon: FaHtml5 }, { name: "CSS3", icon: FaCss3Alt }, { name: "JavaScript", icon: FaJsSquare},
-          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava}
+          { name: "PHP", icon: FaPhp }, { name: "Laravel", icon: FaLaravel }, { name: "MySQL", icon: GrMysql}, { name: "Java", icon: FaJava },
+          { name: "Docker", icon: FaDocker }, { name: "Jenkins", icon: FaJenkins }
         ]
       },
       soft: { title: "Keahlian Interpersonal", list: ["Pemecahan Masalah", "Pemikiran Kritis", "Kerja Sama Tim", "Komunikasi Efektif"] }
