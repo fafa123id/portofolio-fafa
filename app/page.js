@@ -11,6 +11,7 @@ import {
   Award,
   Code,
   Brain,
+  Download,
 } from "lucide-react";
 import {
   FaVuejs,
@@ -27,7 +28,6 @@ import { BiLogoPostgresql } from "react-icons/bi";
 import { GrMysql } from "react-icons/gr";
 import Image from "next/image";
 
-// Data Konten (Content Data)
 const content = {
   id: {
     nav: {
@@ -35,19 +35,21 @@ const content = {
       about: "Tentang",
       experience: "Pengalaman",
       education: "Pendidikan",
+      certifications: "Sertifikasi",
       skills: "Keahlian",
       contact: "Kontak",
     },
 
     hero: {
       profileImage:
-        "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png",
+        "https://1drv.ms/i/c/5f14395ce2292809/IQSxd-ocSvnkRKBit0YdVs-iAZxDp6dHTQasDhPoOlNG4qU",
       greeting: "Halo, saya",
       name: "Ahmad Fauzan Roziqin",
       title: "Software Engineer | Fresh Graduate Teknik Informatika",
       description:
         "Lulusan Teknik Informatika Universitas Brawijaya dengan IPK 3.86/4.00. Memiliki pengalaman profesional sebagai Backend Developer di Minilemon Technology serta pengalaman mengembangkan aplikasi berbasis web melalui proyek akademis dan pengembangan sistem. Berkomitmen untuk membangun solusi perangkat lunak yang andal dan memberikan dampak nyata.",
       button: "Hubungi Saya",
+      cvUrl: "https://1drv.ms/b/c/5f14395ce2292809/IQB3AvH_Xj1fSZ66Hlmm1kTxARUYlH1kCb775UUHm8kmDjY?e=duQPwW",
     },
 
     about: {
@@ -55,20 +57,36 @@ const content = {
       description:
         "Saya merupakan lulusan Teknik Informatika Universitas Brawijaya dengan minat pada rekayasa perangkat lunak dan pengembangan aplikasi. Memiliki pengalaman magang sebagai Backend Developer di Minilemon Technology serta mengembangkan sistem aplikasi manajemen keuangan koperasi sebagai proyek skripsi. Pengalaman tersebut membentuk kemampuan saya dalam menganalisis kebutuhan, mengembangkan solusi, dan berkolaborasi untuk menghasilkan perangkat lunak yang fungsional serta mudah dipelihara.",
     },
-
+    certifications: {
+      title: "Sertifikasi Profesional",
+      list: [
+        {
+          title: "Perekayasa Perangkat Lunak",
+          subtitle: "Software Engineer",
+          issuer: "Badan Nasional Sertifikasi Profesi (BNSP)",
+          category: "Teknologi Informasi dan Komunikasi (TIK)",
+          year: "2026",
+          description:
+            "Sertifikasi kompetensi profesional yang memvalidasi kemampuan dalam bidang rekayasa perangkat lunak, dengan fokus pada perancangan software.",
+          credentialId: "62019 2513 0 0000102 2026",
+          registrationNumber: "TIK.00006 2026",
+        },
+      ],
+    },
     experience: {
       title: "Pengalaman Profesional",
 
-      tabs: ["Proyek", "Organisasi", "Volunteer"],
-
-      projects: [
+      tabs: ["Work Experience", "Proyek", "Organisasi", "Volunteer"],
+      work: [
         {
-          title: "Magang Backend Developer — Minilemon Technology",
+          title: "Backend Developer Intern — Minilemon Technology",
           role: "Backend Developer",
           year: "2025 - 2026",
           description:
-            "Berkontribusi dalam pengembangan dan pemeliharaan portal berita Minilemon Media. Berfokus pada penyempurnaan fitur backend, pengelolaan artikel dan kategori, integrasi media, serta perbaikan alur dan fungsionalitas API selama periode magang 15 September 2025 hingga 23 Januari 2026.",
+            "Berkontribusi dalam pengembangan dan pemeliharaan Minilemon Media, portal berita berbasis web. Berfokus pada penyempurnaan fitur backend, pengelolaan artikel dan kategori, integrasi media, serta perbaikan alur dan fungsionalitas API selama periode magang 15 September 2025 hingga 23 Januari 2026.",
         },
+      ],
+      projects: [
         {
           title: "Skripsi — Sistem Aplikasi Manajemen Keuangan Koperasi",
           role: "Software Engineer",
@@ -192,19 +210,21 @@ const content = {
       about: "About",
       experience: "Experience",
       education: "Education",
+      certifications: "Certifications",
       skills: "Skills",
       contact: "Contact",
     },
 
     hero: {
       profileImage:
-        "https://ubmagerbucket.s3.ap-southeast-1.amazonaws.com/images/Untitled+design+(8).png",
+        "https://1drv.ms/i/c/5f14395ce2292809/IQSxd-ocSvnkRKBit0YdVs-iAZxDp6dHTQasDhPoOlNG4qU",
       greeting: "Hello, I'm",
       name: "Ahmad Fauzan Roziqin",
       title: "Software Engineer | Informatics Engineering Graduate",
       description:
         "Informatics Engineering graduate from Brawijaya University with a 3.86/4.00 GPA. Experienced as a Backend Developer at Minilemon Technology and in developing web-based applications through academic and software engineering projects. Committed to building reliable software solutions that address real-world needs.",
       button: "Contact Me",
+      cvUrl: "https://1drv.ms/b/c/5f14395ce2292809/IQCAYouf3_9_RZKswT6qocUAAXpvCBaMVWY8cdZRHqM2ou8?e=6g1uBi",
     },
 
     about: {
@@ -212,13 +232,27 @@ const content = {
       description:
         "I am an Informatics Engineering graduate from Brawijaya University with a strong interest in software engineering and application development. I gained professional experience as a Backend Developer intern at Minilemon Technology and developed a cooperative financial management application as my undergraduate thesis. These experiences strengthened my ability to analyze requirements, build practical solutions, and collaborate to deliver functional, maintainable software.",
     },
-
+    certifications: {
+      title: "Professional Certifications",
+      list: [
+        {
+          title: "Software Engineer",
+          subtitle: "Perekayasa Perangkat Lunak",
+          issuer: "National Professional Certification Agency (BNSP)",
+          category: "Information and Communication Technology (ICT)",
+          year: "2026",
+          description:
+            "Professional competency certification validating skills in software engineering, with a focus on software design.",
+          credentialId: "62019 2513 0 0000102 2026",
+          registrationNumber: "TIK.00006 2026",
+        },
+      ],
+    },
     experience: {
       title: "Professional Experience",
 
-      tabs: ["Projects", "Organizations", "Volunteer"],
-
-      projects: [
+      tabs: ["Work Experience", "Projects", "Organizations", "Volunteer"],
+      work: [
         {
           title: "Backend Developer Intern — Minilemon Technology",
           role: "Backend Developer",
@@ -226,6 +260,8 @@ const content = {
           description:
             "Contributed to the development and maintenance of Minilemon Media, a web-based news portal. Focused on improving backend features, managing articles and categories, integrating media uploads, and refining API workflows and functionality during the internship from September 15, 2025 to January 23, 2026.",
         },
+      ],
+      projects: [
         {
           title:
             "Undergraduate Thesis — Cooperative Financial Management Application",
@@ -510,12 +546,12 @@ const Hero = ({ content }) => (
     {" "}
     {/* Hero can remain h-screen for full viewport intro */}
     <div className="text-center container mx-auto z-10">
-      <Image
+      <img
         src={content.profileImage}
         alt="Foto Profil Ahmad Fauzan Roziqin"
         width={160}
         height={160}
-        className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50"
+        className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50 object-cover"
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = "https://placehold.co/160x160/1a202c/a0aec0?text=AFR";
@@ -533,7 +569,7 @@ const Hero = ({ content }) => (
       <p className="text-md md:text-lg text-gray-400 mt-4 max-w-2xl mx-auto">
         {content.description}
       </p>
-      <div className="mt-10">
+      <div className="mt-10 flex flex-wrap justify-center gap-4">
         <a
           href="#contact"
           onClick={(e) => {
@@ -545,6 +581,15 @@ const Hero = ({ content }) => (
           className="inline-block bg-cyan-500 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:bg-cyan-600 hover:shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1"
         >
           {content.button}
+        </a>
+
+        <a
+          href={content.cvUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block border border-cyan-400 text-cyan-400 font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:bg-cyan-500 hover:text-white transform hover:-translate-y-1"
+        >
+          Download CV
         </a>
       </div>
     </div>
@@ -567,12 +612,16 @@ const About = ({ content }) => (
 
 const Experience = ({ content }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const icons = [Briefcase, Users, Award];
+  const icons = [Briefcase, Code, Users, Award];
 
   const renderContent = () => {
-    const data = [content.projects, content.organizations, content.volunteers][
-      activeTab
-    ];
+    const data = [
+      content.work,
+      content.projects,
+      content.organizations,
+      content.volunteers,
+    ][activeTab];
+
     return data.map((item, index) => (
       <div
         key={index}
@@ -580,11 +629,14 @@ const Experience = ({ content }) => {
       >
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-2">
           <h3 className="text-xl font-bold text-cyan-400">{item.title}</h3>
+
           <span className="text-sm text-gray-400 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap">
             {item.year}
           </span>
         </div>
+
         <p className="text-md font-semibold text-white mb-3">{item.role}</p>
+
         <p className="text-gray-300">{item.description}</p>
       </div>
     ));
@@ -639,7 +691,72 @@ const Education = ({ content }) => (
     </div>
   </SectionWrapper>
 );
+const Certifications = ({ content }) => (
+  <SectionWrapper id="certifications" className="py-24">
+    <div className="container justify-center mx-auto px-6">
+      <h2 className="text-4xl font-bold text-center mb-4 text-white">
+        {content.title}
+      </h2>
 
+      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
+
+      <div className="flex flex-wrap justify-center gap-8">
+        {content.list.map((item, index) => (
+          <div
+            key={index}
+            className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-gray-700 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2"
+          >
+            <div className="flex items-start justify-between mb-5">
+              <div className="p-3 bg-gray-700/70 rounded-lg">
+                <Award className="text-cyan-400" size={32} />
+              </div>
+
+              <span className="text-sm text-gray-400 bg-gray-700 px-3 py-1 rounded-full">
+                {item.year}
+              </span>
+            </div>
+
+            <h3 className="text-xl font-bold text-cyan-400 mb-1">
+              {item.title}
+            </h3>
+
+            <p className="text-sm text-gray-400 mb-3">{item.subtitle}</p>
+
+            <p className="text-white font-semibold mb-2">{item.issuer}</p>
+
+            <p className="text-sm text-gray-400 mb-4">{item.category}</p>
+
+            <p className="text-gray-300 mb-5">{item.description}</p>
+
+            <div className="border-t border-gray-700 pt-4 space-y-2">
+              <p className="text-sm text-gray-400">
+                Credential ID:
+                <span className="text-gray-300 ml-2">{item.credentialId}</span>
+              </p>
+
+              <p className="text-sm text-gray-400">
+                Registration Number:
+                <span className="text-gray-300 ml-2">
+                  {item.registrationNumber}
+                </span>
+              </p>
+            </div>
+
+            <a
+              href="https://1drv.ms/b/c/5f14395ce2292809/IQDpA6-jog1zRprGBpFDjWClAV_aa9vZPAO2PgB6j-4Ug1w?e=1lbYhy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors duration-300"
+            >
+              <Award size={18} />
+              View Certificate
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </SectionWrapper>
+);
 const Skills = ({ content }) => (
   <SectionWrapper id="skills" className="py-24">
     <div className="container mx-auto px-6">
@@ -733,7 +850,7 @@ const Contact = ({ content }) => (
 
 // Komponen Utama App
 export default function App() {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("id");
   const [activeSection, setActiveSection] = useState("home");
   const currentContent = content[language];
   const isNavigating = useRef(false);
@@ -798,12 +915,12 @@ export default function App() {
         scrollTimeout={scrollTimeout}
       />
 
-      {/* Main content area is now a simple relative container */}
       <main className="relative z-10">
         <Hero content={currentContent.hero} />
         <About content={currentContent.about} />
         <Experience content={currentContent.experience} />
         <Education content={currentContent.education} />
+        <Certifications content={currentContent.certifications} />
         <Skills content={currentContent.skills} />
         <Contact content={currentContent.contact} />
       </main>
