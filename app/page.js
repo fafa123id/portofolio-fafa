@@ -42,14 +42,15 @@ const content = {
 
     hero: {
       profileImage:
-        "https://1drv.ms/i/c/5f14395ce2292809/IQSxd-ocSvnkRKBit0YdVs-iAZxDp6dHTQasDhPoOlNG4qU",
+        "/images/profile.png",
       greeting: "Halo, saya",
       name: "Ahmad Fauzan Roziqin",
       title: "Software Engineer | Fresh Graduate Teknik Informatika",
       description:
         "Lulusan Teknik Informatika Universitas Brawijaya dengan IPK 3.86/4.00. Memiliki pengalaman profesional sebagai Backend Developer di Minilemon Technology serta pengalaman mengembangkan aplikasi berbasis web melalui proyek akademis dan pengembangan sistem. Berkomitmen untuk membangun solusi perangkat lunak yang andal dan memberikan dampak nyata.",
       button: "Hubungi Saya",
-      cvUrl: "https://1drv.ms/b/c/5f14395ce2292809/IQB3AvH_Xj1fSZ66Hlmm1kTxARUYlH1kCb775UUHm8kmDjY?e=duQPwW",
+      cvUrl:
+        "https://1drv.ms/b/c/5f14395ce2292809/IQB3AvH_Xj1fSZ66Hlmm1kTxARUYlH1kCb775UUHm8kmDjY?e=duQPwW",
     },
 
     about: {
@@ -216,15 +217,15 @@ const content = {
     },
 
     hero: {
-      profileImage:
-        "https://1drv.ms/i/c/5f14395ce2292809/IQSxd-ocSvnkRKBit0YdVs-iAZxDp6dHTQasDhPoOlNG4qU",
+      profileImage: "/images/profile.png",
       greeting: "Hello, I'm",
       name: "Ahmad Fauzan Roziqin",
       title: "Software Engineer | Informatics Engineering Graduate",
       description:
         "Informatics Engineering graduate from Brawijaya University with a 3.86/4.00 GPA. Experienced as a Backend Developer at Minilemon Technology and in developing web-based applications through academic and software engineering projects. Committed to building reliable software solutions that address real-world needs.",
       button: "Contact Me",
-      cvUrl: "https://1drv.ms/b/c/5f14395ce2292809/IQCAYouf3_9_RZKswT6qocUAAXpvCBaMVWY8cdZRHqM2ou8?e=6g1uBi",
+      cvUrl:
+        "https://1drv.ms/b/c/5f14395ce2292809/IQCAYouf3_9_RZKswT6qocUAAXpvCBaMVWY8cdZRHqM2ou8?e=6g1uBi",
     },
 
     about: {
@@ -544,18 +545,14 @@ const SectionWrapper = ({ id, children, className = "" }) => {
 const Hero = ({ content }) => (
   <SectionWrapper id="home" className="h-screen">
     {" "}
-    {/* Hero can remain h-screen for full viewport intro */}
     <div className="text-center container mx-auto z-10">
-      <img
+      <Image
         src={content.profileImage}
         alt="Foto Profil Ahmad Fauzan Roziqin"
         width={160}
         height={160}
-        className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50 object-cover"
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = "https://placehold.co/160x160/1a202c/a0aec0?text=AFR";
-        }}
+        priority
+        className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50"
       />
       <h2 className="text-2xl md:text-3xl text-cyan-400 font-light">
         {content.greeting}
