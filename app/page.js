@@ -71,7 +71,7 @@ const content = {
         },
         {
           title: "Skripsi — Sistem Aplikasi Manajemen Keuangan Koperasi",
-          role: "Software Developer",
+          role: "Software Engineer",
           year: "2026",
           description:
             "Mengembangkan sistem aplikasi manajemen keuangan Koperasi Guru SMPN 1 Grogol Kabupaten Kediri untuk meningkatkan efisiensi pencatatan keuangan. Bertanggung jawab atas seluruh proses pengembangan, mulai dari analisis kebutuhan, perancangan sistem, implementasi, integrasi, hingga pengujian aplikasi. Sistem mencakup pengelolaan simpanan, pinjaman, laporan keuangan, dan perhitungan SHU menggunakan metode Waterfall dengan Laravel, Vue.js, dan PostgreSQL.",
@@ -85,7 +85,7 @@ const content = {
         },
         {
           title: "Proyek Jokominto Game",
-          role: "Developer",
+          role: "Software Developer",
           year: "2025",
           description:
             "Mengembangkan antarmuka dan logika permainan untuk game virtual pet 'Jokominto'. Mengimplementasikan fitur-fitur seperti makan, tidur, mandi, dan bermain menggunakan HTML, CSS, dan JavaScript native dengan library XState.",
@@ -229,7 +229,7 @@ const content = {
         {
           title:
             "Undergraduate Thesis — Cooperative Financial Management Application",
-          role: "Software Developer",
+          role: "Software Engineer",
           year: "2026",
           description:
             "Developed a cooperative financial management application for the Teachers' Cooperative of SMPN 1 Grogol, Kediri Regency, to improve financial record-keeping efficiency. Responsible for the entire development process, from requirements analysis and system design to implementation, integration, and application testing. The system covers savings, loans, financial reporting, and profit-sharing (SHU), using the Waterfall methodology with Laravel, Vue.js, and PostgreSQL",
@@ -243,7 +243,7 @@ const content = {
         },
         {
           title: "Jokominto Game Project",
-          role: "Developer",
+          role: "Software Developer",
           year: "2025",
           description:
             "Developed the interface and game logic for the 'Jokominto' virtual pet game. Implemented features such as eat, sleep, bath, and play using native HTML, CSS, and JavaScript with the XState library for state management.",
