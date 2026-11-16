@@ -122,7 +122,7 @@ function Cmd({ id, cmd, title, children }) {
       <div className={`mt-6 ${reveal(done)}`}>
         {title && (
           <h2 className="mb-8 border-b border-[#2E3340] pb-3 text-2xl font-bold tracking-tight sm:text-3xl">
-            <span aria-hidden className={AMBER}># </span>
+            <span aria-hidden className={AMBER}>## </span>
             {title}
           </h2>
         )}
@@ -397,7 +397,7 @@ export default function App() {
 
         <footer className={`text-sm ${MUTED}`}>
           <p>
-            <span className={MUTED}>$ </span>echo "{c.footer} © {new Date().getFullYear()}"
+            <span className={MUTED}>$ </span>echo &quot;{c.footer} © {new Date().getFullYear()}&quot;
             <Cursor />
           </p>
         </footer>
