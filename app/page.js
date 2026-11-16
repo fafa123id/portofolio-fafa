@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, createContext, useContext } from "r
 import Image from "next/image";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-// Pindahkan object `content` lama ke ./content.js dan tambahkan `export` di depannya.
 import { content } from "./content";
 
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-mono" });
@@ -17,9 +16,7 @@ const L = {
 const CERT_URL =
   "https://1drv.ms/b/c/5f14395ce2292809/IQDpA6-jog1zRprGBpFDjWClAV_aa9vZPAO2PgB6j-4Ug1w?e=1lbYhy";
 
-// Urutan section di navbar & halaman (pendidikan sebelum pengalaman)
 const ORDER = ["home", "about", "education", "experience", "certifications", "skills", "contact"];
-// Animasi section baru jalan setelah intro hero selesai
 const Ready = createContext(false);
 
 const AMBER = "text-[#FFB547]";
@@ -29,7 +26,6 @@ const focus =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5CE1E6]";
 
 /* ---------- hooks ---------- */
-// Hero: jumlah karakter (pecahan) naik mulus selama `ms` milidetik setelah `delay`.
 function useTimed(len, go, ms, delay = 0) {
   const [x, setX] = useState(0);
   useEffect(() => {
@@ -54,22 +50,23 @@ function useTimed(len, go, ms, delay = 0) {
   return x;
 }
 
-// True begitu elemen pernah terlihat di layar (sekali saja, tidak pernah kembali ke false).
-function useSeen(ref) {
-  const [seen, setSeen] = useState(false);
+function useSeen(sectionRef, promptRef, enabled) {
+  const [state, setState] = useState({ seen: false, instant: false });
   useEffect(() => {
-    const el = ref.current;
+    if (!enabled) return;
+    const el = sectionRef.current;
     if (!el) return;
     const o = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        setSeen(true);
-        o.disconnect();
-      }
+      if (!e.isIntersecting) return;
+      const r = promptRef.current?.getBoundingClientRect();
+      const promptOnScreen = r ? r.bottom > 0 && r.top < window.innerHeight : true;
+      setState({ seen: true, instant: !promptOnScreen });
+      o.disconnect();
     });
     o.observe(el);
     return () => o.disconnect();
-  }, [ref]);
-  return seen;
+  }, [sectionRef, promptRef, enabled]);
+  return state;
 }
 
 /* ---------- building blocks ---------- */
@@ -77,11 +74,9 @@ const Cursor = () => (
   <span aria-hidden className="blink ml-0.5 inline-block h-[1.05em] w-[0.55em] translate-y-[0.18em] bg-[#FFB547]" />
 );
 
-// Satu gaya fade-in untuk SEMUA elemen yang muncul (prompt, nama, jabatan, output section)
 const reveal = (on) =>
   `transition-all duration-500 ease-out ${on ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`;
 
-// Teks diungkap dengan menganimasikan lebar (satuan ch, font mono), caret = border kanan.
 function Prompt({ cmd, chars, caret = "none", innerRef, visible = true }) {
   return (
     <p ref={innerRef} className={`flex whitespace-nowrap text-sm sm:text-base ${reveal(visible)}`}>
@@ -107,18 +102,18 @@ function Prompt({ cmd, chars, caret = "none", innerRef, visible = true }) {
   );
 }
 
-// Satu section = satu perintah. Begitu prompt-nya terlihat di layar (di bagian mana pun),
-// diketik sekali dengan kecepatan tetap yang pelan, lalu outputnya muncul. Tidak diulang/dihapus.
 function Cmd({ id, cmd, title, children }) {
   const ref = useRef(null);
+  const sectionRef = useRef(null);
   const ready = useContext(Ready);
-  const seen = useSeen(ref);
-  const go = seen && ready;
-  const x = useTimed(cmd.length, go, Math.max(500, cmd.length * 40), 100);
-  const done = go && x >= cmd.length;
+  const { seen, instant } = useSeen(sectionRef, ref, ready);
+  const go = seen && !instant;
+  const typed = useTimed(cmd.length, go, Math.max(500, cmd.length * 40), 100);
+  const x = instant ? cmd.length : typed;
+  const done = seen && x >= cmd.length;
   return (
-    <section id={id} className="scroll-mt-6 pb-20">
-      <Prompt innerRef={ref} cmd={cmd} chars={x} visible={go} caret={go && !done ? (x > 0 ? "solid" : "blink") : "none"} />
+    <section id={id} ref={sectionRef} className="scroll-mt-6 pb-20">
+      <Prompt innerRef={ref} cmd={cmd} chars={x} visible={seen} caret={go && !done ? (x > 0 ? "solid" : "blink") : "none"} />
       <div className={`mt-6 ${reveal(done)}`}>
         {title && (
           <h2 className="mb-8 border-b border-[#2E3340] pb-3 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -132,7 +127,6 @@ function Cmd({ id, cmd, title, children }) {
   );
 }
 
-// Judul sub-section: amber, tebal, dengan garis pemisah
 const Sub = ({ children }) => (
   <h3 className={`mb-6 flex items-center gap-3 text-base font-bold sm:text-lg ${AMBER}`}>
     <span aria-hidden className="h-0.5 w-6 shrink-0 bg-[#FFB547]" />
@@ -170,7 +164,6 @@ export default function App() {
   const t = L[lang];
   const navKeys = ORDER;
 
-  // hero: dua perintah berurutan
   const cmd1 = "whoami";
   const cmd2 = "cat role.txt";
   const n1 = useTimed(cmd1.length, true, 550, 350);
@@ -178,7 +171,6 @@ export default function App() {
   const n2 = useTimed(cmd2.length, d1, 800, 250);
   const d2 = d1 && n2 >= cmd2.length;
 
-  // Refresh selalu kembali ke atas (tanpa lompat ke hash / posisi lama)
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     if (window.location.hash) history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -197,8 +189,6 @@ export default function App() {
     return () => clearInterval(id);
   }, []);
 
-  // Section aktif dihitung dari posisi scroll (bukan IntersectionObserver),
-  // jadi section pendek tidak terlewat dan section terakhir aktif saat mentok bawah.
   const lock = useRef(false);
   const lockTimer = useRef(0);
   const compute = useRef(() => {});
@@ -220,7 +210,6 @@ export default function App() {
     };
     const onScroll = () => {
       if (lock.current) {
-        // tunggu smooth-scroll hasil klik selesai sebelum deteksi jalan lagi
         clearTimeout(lockTimer.current);
         lockTimer.current = setTimeout(() => {
           lock.current = false;
