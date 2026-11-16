@@ -1,962 +1,471 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Github,
-  Linkedin,
-  Mail,
-  Briefcase,
-  GraduationCap,
-  Users,
-  Award,
-  Code,
-  Brain,
-  Download,
-} from "lucide-react";
-import {
-  FaVuejs,
-  FaLaravel,
-  FaJava,
-  FaHtml5,
-  FaCss3Alt,
-  FaJsSquare,
-  FaPhp,
-  FaDocker,
-  FaJenkins,
-} from "react-icons/fa";
-import { BiLogoPostgresql } from "react-icons/bi";
-import { GrMysql } from "react-icons/gr";
+import React, { useState, useEffect, useRef, createContext, useContext } from "react";
 import Image from "next/image";
+import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+// Pindahkan object `content` lama ke ./content.js dan tambahkan `export` di depannya.
+import { content } from "./content";
 
-const content = {
-  id: {
-    nav: {
-      home: "Beranda",
-      about: "Tentang",
-      experience: "Pengalaman",
-      education: "Pendidikan",
-      certifications: "Sertifikasi",
-      skills: "Keahlian",
-      contact: "Kontak",
-    },
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-mono" });
+const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-sans" });
 
-    hero: {
-      profileImage:
-        "/images/profile.png",
-      greeting: "Halo, saya",
-      name: "Ahmad Fauzan Roziqin",
-      title: "Software Engineer | Fresh Graduate Teknik Informatika",
-      description:
-        "Lulusan Teknik Informatika Universitas Brawijaya dengan IPK 3.86/4.00. Memiliki pengalaman profesional sebagai Backend Developer di Minilemon Technology serta pengalaman mengembangkan aplikasi berbasis web melalui proyek akademis dan pengembangan sistem. Berkomitmen untuk membangun solusi perangkat lunak yang andal dan memberikan dampak nyata.",
-      button: "Hubungi Saya",
-      cvUrl:
-        "https://1drv.ms/b/c/5f14395ce2292809/IQB3AvH_Xj1fSZ66Hlmm1kTxARUYlH1kCb775UUHm8kmDjY?e=duQPwW",
-    },
-
-    about: {
-      title: "Tentang Saya",
-      description:
-        "Saya merupakan lulusan Teknik Informatika Universitas Brawijaya dengan minat pada rekayasa perangkat lunak dan pengembangan aplikasi. Memiliki pengalaman magang sebagai Backend Developer di Minilemon Technology serta mengembangkan sistem aplikasi manajemen keuangan koperasi sebagai proyek skripsi. Pengalaman tersebut membentuk kemampuan saya dalam menganalisis kebutuhan, mengembangkan solusi, dan berkolaborasi untuk menghasilkan perangkat lunak yang fungsional serta mudah dipelihara.",
-    },
-    certifications: {
-      title: "Sertifikasi Profesional",
-      list: [
-        {
-          title: "Perekayasa Perangkat Lunak",
-          subtitle: "Software Engineer",
-          issuer: "Badan Nasional Sertifikasi Profesi (BNSP)",
-          category: "Teknologi Informasi dan Komunikasi (TIK)",
-          year: "2026",
-          description:
-            "Sertifikasi kompetensi profesional yang memvalidasi kemampuan dalam bidang rekayasa perangkat lunak, dengan fokus pada perancangan software.",
-          credentialId: "62019 2513 0 0000102 2026",
-          registrationNumber: "TIK.00006 2026",
-        },
-      ],
-    },
-    experience: {
-      title: "Pengalaman Profesional",
-
-      tabs: ["Work Experience", "Proyek", "Organisasi", "Volunteer"],
-      work: [
-        {
-          title: "Backend Developer Intern — Minilemon Technology",
-          role: "Backend Developer",
-          year: "2025 - 2026",
-          description:
-            "Berkontribusi dalam pengembangan dan pemeliharaan Minilemon Media, portal berita berbasis web. Berfokus pada penyempurnaan fitur backend, pengelolaan artikel dan kategori, integrasi media, serta perbaikan alur dan fungsionalitas API selama periode magang 15 September 2025 hingga 23 Januari 2026.",
-        },
-      ],
-      projects: [
-        {
-          title: "Skripsi — Sistem Aplikasi Manajemen Keuangan Koperasi",
-          role: "Software Engineer",
-          year: "2026",
-          description:
-            "Mengembangkan sistem aplikasi manajemen keuangan Koperasi Guru SMPN 1 Grogol Kabupaten Kediri untuk meningkatkan efisiensi pencatatan keuangan. Bertanggung jawab atas seluruh proses pengembangan, mulai dari analisis kebutuhan, perancangan sistem, implementasi, integrasi, hingga pengujian aplikasi. Sistem mencakup pengelolaan simpanan, pinjaman, laporan keuangan, dan perhitungan SHU menggunakan metode Waterfall dengan Laravel, Vue.js, dan PostgreSQL.",
-        },
-        {
-          title: "Proyek UBMager API",
-          role: "Back-End Developer",
-          year: "2025",
-          description:
-            "Mengembangkan prototipe back-end untuk aplikasi e-commerce jastip menggunakan Laravel API dengan database MySQL. Mengimplementasikan fitur-fitur seperti add to cart, checkout, dan integrasi payment gateway Midtrans Snap (sandbox).",
-        },
-        {
-          title: "Proyek Jokominto Game",
-          role: "Software Developer",
-          year: "2025",
-          description:
-            "Mengembangkan antarmuka dan logika permainan untuk game virtual pet 'Jokominto'. Mengimplementasikan fitur-fitur seperti makan, tidur, mandi, dan bermain menggunakan HTML, CSS, dan JavaScript native dengan library XState.",
-        },
-        {
-          title: "Proyek Tokoman",
-          role: "Full Stack Developer",
-          year: "2024",
-          description:
-            "Merancang, mengembangkan, dan memelihara fungsionalitas front-end dan back-end. Membangun aplikasi MVC Laravel yang dilengkapi antarmuka ramah pengguna yang dibuat dengan Tailwind CSS. Berkontribusi dalam proses review kode, pengujian, dan penyebaran.",
-        },
-        {
-          title: "Proyek LibHub",
-          role: "Front-End Developer",
-          year: "2023",
-          description:
-            "Merancang dan mengembangkan antarmuka pengguna (UI) yang intuitif dan responsif. Mengimplementasikan desain fungsional menggunakan HTML, CSS, dan JavaScript, serta bekerja sama dengan tim untuk integrasi dan pengujian.",
-        },
-      ],
-
-      organizations: [
-        {
-          title: "K-Risma - Universitas Brawijaya",
-          role: "Staff DKV (Desain Komunikasi Visual)",
-          year: "2023-2024",
-          description:
-            "Bertanggung jawab merancang materi visual untuk promosi acara, seperti poster, banner, dan grafis media sosial. Berkolaborasi dalam tim untuk mengembangkan konsep kreatif yang sesuai dengan identitas acara.",
-        },
-      ],
-
-      volunteers: [
-        {
-          title: "Program Kerja HOLOGY 7.0 - BEM Filkom UB",
-          role: "Staff Equipment",
-          year: "2024",
-          description:
-            "Menyediakan dan mengelola peralatan yang dibutuhkan selama acara. Menyusun inventaris dan berkoordinasi dengan tim untuk memastikan penggunaan peralatan yang efisien.",
-        },
-        {
-          title: "Program Kerja Code 2023 - KRISMA, UB",
-          role: "Staff DDM (Dokumentasi, Dekorasi, Multimedia)",
-          year: "2023",
-          description:
-            "Bertanggung jawab dalam dokumentasi seluruh rangkaian program kerja dan mengembangkan konsep kreatif untuk materi desain foto dan video publikasi.",
-        },
-      ],
-    },
-
-    education: {
-      title: "Pendidikan",
-      institution: "Universitas Brawijaya",
-      major: "Teknik Informatika",
-      year: "2022 - 2026",
-      gpa: "IPK: 3.86 / 4.00",
-    },
-
-    skills: {
-      title: "Kompetensi Inti",
-
-      hard: {
-        title: "Keahlian Teknis",
-
-        list: [
-          { name: "HTML5", icon: FaHtml5 },
-          { name: "CSS3", icon: FaCss3Alt },
-          { name: "JavaScript", icon: FaJsSquare },
-
-          { name: "PHP", icon: FaPhp },
-          { name: "Laravel", icon: FaLaravel },
-          { name: "Vue.js", icon: FaVuejs },
-          { name: "MySQL", icon: GrMysql },
-          { name: "PostgreSQL", icon: BiLogoPostgresql },
-          { name: "Java", icon: FaJava },
-
-          { name: "Docker", icon: FaDocker },
-          { name: "Jenkins", icon: FaJenkins },
-        ],
-      },
-
-      soft: {
-        title: "Keahlian Interpersonal",
-        list: [
-          "Pemecahan Masalah",
-          "Pemikiran Kritis",
-          "Kerja Sama Tim",
-          "Komunikasi Efektif",
-        ],
-      },
-    },
-
-    contact: {
-      title: "Mari Terhubung",
-      description:
-        "Saya terbuka untuk diskusi, kolaborasi, atau peluang kerja. Jangan ragu untuk menghubungi saya.",
-      email: "ahmadfauzanroziqin@gmail.com",
-      phone: "+6287805985892",
-    },
-
-    footer: "Dibuat dengan ❤️ oleh Ahmad Fauzan Roziqin",
-  },
-  en: {
-    nav: {
-      home: "Home",
-      about: "About",
-      experience: "Experience",
-      education: "Education",
-      certifications: "Certifications",
-      skills: "Skills",
-      contact: "Contact",
-    },
-
-    hero: {
-      profileImage: "/images/profile.png",
-      greeting: "Hello, I'm",
-      name: "Ahmad Fauzan Roziqin",
-      title: "Software Engineer | Informatics Engineering Graduate",
-      description:
-        "Informatics Engineering graduate from Brawijaya University with a 3.86/4.00 GPA. Experienced as a Backend Developer at Minilemon Technology and in developing web-based applications through academic and software engineering projects. Committed to building reliable software solutions that address real-world needs.",
-      button: "Contact Me",
-      cvUrl:
-        "https://1drv.ms/b/c/5f14395ce2292809/IQCAYouf3_9_RZKswT6qocUAAXpvCBaMVWY8cdZRHqM2ou8?e=6g1uBi",
-    },
-
-    about: {
-      title: "About Me",
-      description:
-        "I am an Informatics Engineering graduate from Brawijaya University with a strong interest in software engineering and application development. I gained professional experience as a Backend Developer intern at Minilemon Technology and developed a cooperative financial management application as my undergraduate thesis. These experiences strengthened my ability to analyze requirements, build practical solutions, and collaborate to deliver functional, maintainable software.",
-    },
-    certifications: {
-      title: "Professional Certifications",
-      list: [
-        {
-          title: "Software Engineer",
-          subtitle: "Perekayasa Perangkat Lunak",
-          issuer: "National Professional Certification Agency (BNSP)",
-          category: "Information and Communication Technology (ICT)",
-          year: "2026",
-          description:
-            "Professional competency certification validating skills in software engineering, with a focus on software design.",
-          credentialId: "62019 2513 0 0000102 2026",
-          registrationNumber: "TIK.00006 2026",
-        },
-      ],
-    },
-    experience: {
-      title: "Professional Experience",
-
-      tabs: ["Work Experience", "Projects", "Organizations", "Volunteer"],
-      work: [
-        {
-          title: "Backend Developer Intern — Minilemon Technology",
-          role: "Backend Developer",
-          year: "2025 - 2026",
-          description:
-            "Contributed to the development and maintenance of Minilemon Media, a web-based news portal. Focused on improving backend features, managing articles and categories, integrating media uploads, and refining API workflows and functionality during the internship from September 15, 2025 to January 23, 2026.",
-        },
-      ],
-      projects: [
-        {
-          title:
-            "Undergraduate Thesis — Cooperative Financial Management Application",
-          role: "Software Engineer",
-          year: "2026",
-          description:
-            "Developed a cooperative financial management application for the Teachers' Cooperative of SMPN 1 Grogol, Kediri Regency, to improve financial record-keeping efficiency. Responsible for the entire development process, from requirements analysis and system design to implementation, integration, and application testing. The system covers savings, loans, financial reporting, and profit-sharing (SHU), using the Waterfall methodology with Laravel, Vue.js, and PostgreSQL",
-        },
-        {
-          title: "UBMager API Project",
-          role: "Back-End Developer",
-          year: "2025",
-          description:
-            "Developed a back-end prototype for a 'jastip' e-commerce application using Laravel API with a MySQL database. Implemented features like add to cart, checkout, and Midtrans Snap payment gateway integration (sandbox).",
-        },
-        {
-          title: "Jokominto Game Project",
-          role: "Software Developer",
-          year: "2025",
-          description:
-            "Developed the interface and game logic for the 'Jokominto' virtual pet game. Implemented features such as eat, sleep, bath, and play using native HTML, CSS, and JavaScript with the XState library for state management.",
-        },
-        {
-          title: "Tokoman Project",
-          role: "Full Stack Developer",
-          year: "2024",
-          description:
-            "Designed, developed, and maintained both front-end and back-end functionalities. Built a Laravel MVC application with a user-friendly interface created with Tailwind CSS. Contributed to code reviews, testing, and deployment processes.",
-        },
-        {
-          title: "LibHub Project",
-          role: "Front-End Developer",
-          year: "2023",
-          description:
-            "Designed and developed an intuitive and responsive user interface (UI). Implemented functional designs using HTML, CSS, and JavaScript, and collaborated with the team for integration and testing.",
-        },
-      ],
-
-      organizations: [
-        {
-          title: "K-Risma - Brawijaya University",
-          role: "Visual Communication Design Staff",
-          year: "2023-2024",
-          description:
-            "Responsible for designing visual materials for event promotion (posters, banners, social media graphics). Collaborated with the team to develop creative concepts aligned with the event's identity.",
-        },
-      ],
-
-      volunteers: [
-        {
-          title: "HOLOGY 7.0 Work Program - BEM Filkom UB",
-          role: "Equipment Staff",
-          year: "2024",
-          description:
-            "Provided and managed the necessary equipment during the event. Compiled an equipment inventory and coordinated with the team to ensure efficient usage.",
-        },
-        {
-          title: "Code 2023 Work Program - KRISMA, UB",
-          role: "Documentation, Decoration, Multimedia Staff",
-          year: "2023",
-          description:
-            "Responsible for documenting the entire work program and developing creative concepts for photo and video publication materials.",
-        },
-      ],
-    },
-
-    education: {
-      title: "Education",
-      institution: "Brawijaya University",
-      major: "Informatics Engineering",
-      year: "2022 - 2026",
-      gpa: "GPA: 3.86 / 4.00",
-    },
-
-    skills: {
-      title: "Core Competencies",
-
-      hard: {
-        title: "Technical Skills",
-
-        list: [
-          { name: "HTML5", icon: FaHtml5 },
-          { name: "CSS3", icon: FaCss3Alt },
-          { name: "JavaScript", icon: FaJsSquare },
-
-          { name: "PHP", icon: FaPhp },
-          { name: "Laravel", icon: FaLaravel },
-          { name: "Vue.js", icon: FaVuejs },
-          { name: "MySQL", icon: GrMysql },
-          { name: "PostgreSQL", icon: BiLogoPostgresql },
-          { name: "Java", icon: FaJava },
-
-          { name: "Docker", icon: FaDocker },
-          { name: "Jenkins", icon: FaJenkins },
-        ],
-      },
-
-      soft: {
-        title: "Soft Skills",
-        list: [
-          "Problem Solving",
-          "Critical Thinking",
-          "Teamwork",
-          "Effective Communication",
-        ],
-      },
-    },
-
-    contact: {
-      title: "Let's Get In Touch",
-      description:
-        "I'm open to discussions, collaborations, or job opportunities. Feel free to reach out to me.",
-      email: "ahmadfauzanroziqin@gmail.com",
-      phone: "+62 823 3476 3809",
-    },
-
-    footer: "Crafted with ❤️ by Ahmad Fauzan Roziqin",
-  },
+const L = {
+  id: { cv: "unduh_cv", cred: "id_kredensial", reg: "no_registrasi", cert: "buka_sertifikat" },
+  en: { cv: "download_cv", cred: "credential_id", reg: "registration_no", cert: "open_certificate" },
 };
+const CERT_URL =
+  "https://1drv.ms/b/c/5f14395ce2292809/IQDpA6-jog1zRprGBpFDjWClAV_aa9vZPAO2PgB6j-4Ug1w?e=1lbYhy";
 
-// Komponen Header
-const Header = ({ lang, setLang, content, activeSection }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+// Urutan section di navbar & halaman (pendidikan sebelum pengalaman)
+const ORDER = ["home", "about", "education", "experience", "certifications", "skills", "contact"];
+// Animasi section baru jalan setelah intro hero selesai
+const Ready = createContext(false);
 
-  // Effect to handle scroll event for header background
+const AMBER = "text-[#FFB547]";
+const CYAN = "text-[#5CE1E6]";
+const MUTED = "text-[#8B8F98]";
+const focus =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5CE1E6]";
+
+/* ---------- hooks ---------- */
+// Hero: jumlah karakter (pecahan) naik mulus selama `ms` milidetik setelah `delay`.
+function useTimed(len, go, ms, delay = 0) {
+  const [x, setX] = useState(0);
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const NavLink = ({ sectionKey, children }) => (
-    <a
-      href={`#${sectionKey}`}
-      onClick={(e) => {
-        e.preventDefault();
-        document
-          .getElementById(sectionKey)
-          ?.scrollIntoView({ behavior: "smooth" });
-        if (isMenuOpen) setIsMenuOpen(false);
-      }}
-      className={`transition-colors duration-300 relative group ${activeSection === sectionKey ? "text-cyan-400" : "text-gray-300 hover:text-cyan-400"}`}
-    >
-      {children}
-      <span
-        className={`absolute bottom-0 left-0 h-0.5 bg-cyan-400 transition-all duration-300 ${activeSection === sectionKey ? "w-full" : "w-0 group-hover:w-full"}`}
-      ></span>
-    </a>
-  );
-
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-gray-900/80 backdrop-blur-sm shadow-lg" : "bg-transparent"}`}
-    >
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a
-          href="#home"
-          onClick={(e) => {
-            e.preventDefault();
-            document
-              .getElementById("home")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="text-2xl font-bold text-white transition-transform duration-300 hover:scale-110"
-        >
-          A.F.R.
-        </a>
-        <div className="hidden md:flex items-center space-x-8">
-          {Object.entries(content.nav).map(([key, value]) => (
-            <NavLink key={key} sectionKey={key}>
-              {value}
-            </NavLink>
-          ))}
-        </div>
-        <div className="flex items-center">
-          <div className="flex items-center space-x-2 mr-4">
-            <button
-              onClick={() => setLang("en")}
-              className={`px-3 py-1 text-sm rounded-md transition-all duration-300 ${lang === "en" ? "bg-cyan-500 text-white shadow-md shadow-cyan-500/30" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => setLang("id")}
-              className={`px-3 py-1 text-sm rounded-md transition-all duration-300 ${lang === "id" ? "bg-cyan-500 text-white shadow-md shadow-cyan-500/30" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`}
-            >
-              ID
-            </button>
-          </div>
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white focus:outline-none"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={
-                    isMenuOpen
-                      ? "M6 18L18 6M6 6l12 12"
-                      : "M4 6h16M4 12h16m-7 6h7"
-                  }
-                ></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </nav>
-      {isMenuOpen && (
-        <div className="md:hidden bg-gray-900/90 backdrop-blur-sm">
-          <div className="flex flex-col items-center space-y-6 py-6">
-            {Object.entries(content.nav).map(([key, value]) => (
-              <NavLink key={key} sectionKey={key}>
-                {value}
-              </NavLink>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
-  );
-};
-
-// --- Section Components ---
-
-// SectionWrapper: Animasi transisi yang lebih halus dan tegas
-const SectionWrapper = ({ id, children, className = "" }) => {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Memicu animasi hanya jika elemen masuk ke viewport
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }, // Memicu animasi saat 20% bagian terlihat
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
+    if (!go) return;
+    let raf = 0;
+    let t0 = 0;
+    setX(0);
+    const t = setTimeout(() => {
+      const tick = (ts) => {
+        t0 = t0 || ts;
+        const k = Math.min(1, (ts - t0) / ms);
+        setX(len * k);
+        if (k < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, delay);
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
+      clearTimeout(t);
+      cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [len, go, ms, delay]);
+  return x;
+}
 
+// True begitu elemen pernah terlihat di layar (sekali saja, tidak pernah kembali ke false).
+function useSeen(ref) {
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const o = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setSeen(true);
+        o.disconnect();
+      }
+    });
+    o.observe(el);
+    return () => o.disconnect();
+  }, [ref]);
+  return seen;
+}
+
+/* ---------- building blocks ---------- */
+const Cursor = () => (
+  <span aria-hidden className="blink ml-0.5 inline-block h-[1.05em] w-[0.55em] translate-y-[0.18em] bg-[#FFB547]" />
+);
+
+// Satu gaya fade-in untuk SEMUA elemen yang muncul (prompt, nama, jabatan, output section)
+const reveal = (on) =>
+  `transition-all duration-500 ease-out ${on ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`;
+
+// Teks diungkap dengan menganimasikan lebar (satuan ch, font mono), caret = border kanan.
+function Prompt({ cmd, chars, caret = "none", innerRef, visible = true }) {
   return (
-    <section
-      id={id}
-      ref={ref}
-      className={`min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden ${className}`}
-    >
-      <div
-        className={`transition-all duration-1000 ease-out w-full ${isVisible ? "opacity-100 translate-y-0 scale-100 blur-0" : "opacity-0 translate-y-12 scale-95 blur-sm"}`}
+    <p ref={innerRef} className={`flex whitespace-nowrap text-sm sm:text-base ${reveal(visible)}`}>
+      <span className="hidden sm:inline">
+        <span className={`${AMBER} font-bold`}>ahmad</span>
+        <span className={MUTED}>@</span>
+        <span className={CYAN}>portfolio</span>
+        <span className={MUTED}>:</span>
+      </span>
+      <span className={MUTED}>~$&nbsp;</span>
+      <span
+        aria-label={cmd}
+        className={`inline-block overflow-hidden whitespace-pre align-bottom ${caret === "blink" ? "caret-blink" : ""}`}
+        style={{
+          width: `${chars}ch`,
+          borderRight: "3px solid",
+          borderColor: caret === "none" ? "transparent" : "#FFB547",
+        }}
       >
+        {cmd}
+      </span>
+    </p>
+  );
+}
+
+// Satu section = satu perintah. Begitu prompt-nya terlihat di layar (di bagian mana pun),
+// diketik sekali dengan kecepatan tetap yang pelan, lalu outputnya muncul. Tidak diulang/dihapus.
+function Cmd({ id, cmd, title, children }) {
+  const ref = useRef(null);
+  const ready = useContext(Ready);
+  const seen = useSeen(ref);
+  const go = seen && ready;
+  const x = useTimed(cmd.length, go, Math.max(500, cmd.length * 40), 100);
+  const done = go && x >= cmd.length;
+  return (
+    <section id={id} className="scroll-mt-6 pb-20">
+      <Prompt innerRef={ref} cmd={cmd} chars={x} visible={go} caret={go && !done ? (x > 0 ? "solid" : "blink") : "none"} />
+      <div className={`mt-6 ${reveal(done)}`}>
+        {title && (
+          <h2 className="mb-8 border-b border-[#2E3340] pb-3 text-2xl font-bold tracking-tight sm:text-3xl">
+            <span aria-hidden className={AMBER}># </span>
+            {title}
+          </h2>
+        )}
         {children}
       </div>
     </section>
   );
-};
+}
 
-const Hero = ({ content }) => (
-  <SectionWrapper id="home" className="h-screen">
-    {" "}
-    <div className="text-center container mx-auto z-10">
-      <Image
-        src={content.profileImage}
-        alt="Foto Profil Ahmad Fauzan Roziqin"
-        width={160}
-        height={160}
-        priority
-        className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/30 hover:border-purple-500/50"
-      />
-      <h2 className="text-2xl md:text-3xl text-cyan-400 font-light">
-        {content.greeting}
-      </h2>
-      <h1 className="text-5xl md:text-7xl font-extrabold my-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
-        {content.name}
-      </h1>
-      <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-        {content.title}
-      </p>
-      <p className="text-md md:text-lg text-gray-400 mt-4 max-w-2xl mx-auto">
-        {content.description}
-      </p>
-      <div className="mt-10 flex flex-wrap justify-center gap-4">
-        <a
-          href="#contact"
-          onClick={(e) => {
-            e.preventDefault();
-            document
-              .getElementById("contact")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="inline-block bg-cyan-500 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:bg-cyan-600 hover:shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1"
-        >
-          {content.button}
-        </a>
-
-        <a
-          href={content.cvUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block border border-cyan-400 text-cyan-400 font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:bg-cyan-500 hover:text-white transform hover:-translate-y-1"
-        >
-          Download CV
-        </a>
-      </div>
-    </div>
-  </SectionWrapper>
+// Judul sub-section: amber, tebal, dengan garis pemisah
+const Sub = ({ children }) => (
+  <h3 className={`mb-6 flex items-center gap-3 text-base font-bold sm:text-lg ${AMBER}`}>
+    <span aria-hidden className="h-0.5 w-6 shrink-0 bg-[#FFB547]" />
+    <span>{children}</span>
+    <span aria-hidden className="h-px flex-1 bg-[#2E3340]" />
+  </h3>
 );
 
-const About = ({ content }) => (
-  <SectionWrapper id="about" className="py-24">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-4 text-white">
-        {content.title}
-      </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
-      <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center leading-relaxed">
-        {content.description}
-      </p>
-    </div>
-  </SectionWrapper>
-);
+function Log({ items }) {
+  return (
+    <ol className="ml-1.5 space-y-8 border-l border-[#232733]">
+      {items.map((it) => (
+        <li key={it.title} className="relative pl-6">
+          <span className="absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full bg-[#FFB547] shadow-[0_0_10px_#FFB547]" />
+          <div className="flex flex-wrap gap-x-3 text-sm">
+            <span className={`${AMBER} tabular-nums`}>{it.year}</span>
+            <span className={CYAN}>{it.role}</span>
+          </div>
+          <h4 className="mt-1 font-bold leading-snug">{it.title}</h4>
+          <p className="mt-2 max-w-[68ch] font-[family-name:var(--font-sans)] leading-relaxed text-[#C9C5B8]">
+            {it.description}
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
-const Experience = ({ content }) => {
-  const [activeTab, setActiveTab] = useState(0);
-  const icons = [Briefcase, Code, Users, Award];
+/* ---------- page ---------- */
+export default function App() {
+  const [lang, setLang] = useState("id");
+  const [active, setActive] = useState("home");
+  const [clock, setClock] = useState("");
+  const c = content[lang];
+  const t = L[lang];
+  const navKeys = ORDER;
 
-  const renderContent = () => {
-    const data = [
-      content.work,
-      content.projects,
-      content.organizations,
-      content.volunteers,
-    ][activeTab];
+  // hero: dua perintah berurutan
+  const cmd1 = "whoami";
+  const cmd2 = "cat role.txt";
+  const n1 = useTimed(cmd1.length, true, 550, 350);
+  const d1 = n1 >= cmd1.length;
+  const n2 = useTimed(cmd2.length, d1, 800, 250);
+  const d2 = d1 && n2 >= cmd2.length;
 
-    return data.map((item, index) => (
-      <div
-        key={index}
-        className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-gray-700 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2"
-      >
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-2">
-          <h3 className="text-xl font-bold text-cyan-400">{item.title}</h3>
+  // Refresh selalu kembali ke atas (tanpa lompat ke hash / posisi lama)
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (window.location.hash) history.replaceState(null, "", window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }, []);
 
-          <span className="text-sm text-gray-400 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap">
-            {item.year}
-          </span>
-        </div>
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
-        <p className="text-md font-semibold text-white mb-3">{item.role}</p>
+  useEffect(() => {
+    const tick = () =>
+      setClock(new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).replace(".", ":") + " WIB");
+    tick();
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
+  }, []);
 
-        <p className="text-gray-300">{item.description}</p>
-      </div>
-    ));
+  // Section aktif dihitung dari posisi scroll (bukan IntersectionObserver),
+  // jadi section pendek tidak terlewat dan section terakhir aktif saat mentok bawah.
+  const lock = useRef(false);
+  const lockTimer = useRef(0);
+  const compute = useRef(() => {});
+
+  useEffect(() => {
+    compute.current = () => {
+      if (lock.current) return;
+      const vh = window.innerHeight;
+      if (window.scrollY + vh >= document.documentElement.scrollHeight - 4) {
+        return setActive(navKeys[navKeys.length - 1]);
+      }
+      const line = vh * 0.35;
+      let cur = navKeys[0];
+      for (const k of navKeys) {
+        const el = document.getElementById(k);
+        if (el && el.getBoundingClientRect().top <= line) cur = k;
+      }
+      setActive(cur);
+    };
+    const onScroll = () => {
+      if (lock.current) {
+        // tunggu smooth-scroll hasil klik selesai sebelum deteksi jalan lagi
+        clearTimeout(lockTimer.current);
+        lockTimer.current = setTimeout(() => {
+          lock.current = false;
+          compute.current();
+        }, 150);
+      } else compute.current();
+    };
+    compute.current();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      clearTimeout(lockTimer.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const goTo = (k) => {
+    setActive(k);
+    lock.current = true;
+    clearTimeout(lockTimer.current);
+    lockTimer.current = setTimeout(() => {
+      lock.current = false;
+      compute.current();
+    }, 700);
   };
 
   return (
-    <SectionWrapper id="experience" className="py-24">
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-4 text-white">
-          {content.title}
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
-        <div className="flex justify-center mb-8 border-b border-gray-700">
-          {content.tabs.map((tab, index) => {
-            const Icon = icons[index];
-            return (
-              <button
-                key={index}
-                onClick={() => setActiveTab(index)}
-                className={`flex items-center space-x-2 px-4 md:px-6 py-3 text-sm md:text-base font-medium transition-all duration-300 focus:outline-none ${activeTab === index ? "text-cyan-400 border-b-2 border-cyan-400" : "text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-t-md"}`}
-              >
-                <Icon size={20} />
-                <span>{tab}</span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {renderContent()}
-        </div>
-      </div>
-    </SectionWrapper>
-  );
-};
+    <div className={`${mono.variable} ${sans.variable} min-h-screen bg-[#0A0C10] font-[family-name:var(--font-mono)] text-[#E6E1D3] antialiased`}>
+      <div aria-hidden className="scan pointer-events-none fixed inset-0 z-40" />
+      <div aria-hidden className="vig pointer-events-none fixed inset-0 z-40" />
 
-const Education = ({ content }) => (
-  <SectionWrapper id="education" className="py-24">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-4 text-white">
-        {content.title}
-      </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
-      <div className="max-w-2xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700 text-center shadow-lg transition-all duration-500 hover:shadow-cyan-500/20 hover:border-cyan-500/50 transform hover:-translate-y-2">
-        <GraduationCap className="mx-auto text-cyan-400 mb-4" size={48} />
-        <h3 className="text-2xl font-bold text-white">{content.institution}</h3>
-        <p className="text-xl text-cyan-400 mt-1">{content.major}</p>
-        <p className="text-gray-400 mt-2">{content.year}</p>
-        <p className="text-gray-300 font-semibold mt-4 text-lg">
-          {content.gpa}
-        </p>
-      </div>
-    </div>
-  </SectionWrapper>
-);
-const Certifications = ({ content }) => (
-  <SectionWrapper id="certifications" className="py-24">
-    <div className="container justify-center mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-4 text-white">
-        {content.title}
-      </h2>
+      <Ready.Provider value={d2}>
+      <main className="mx-auto max-w-4xl px-5 pb-28 pt-12 sm:px-8 sm:pt-20">
+        {/* HERO */}
+        <section id="home" className="min-h-[78vh] scroll-mt-6 pb-20">
+          <div className="mb-10 flex flex-wrap items-end gap-x-6 gap-y-3">
+            <div className="relative shrink-0">
+              <Image
+                src={c.hero.profileImage}
+                alt={c.hero.name}
+                width={192}
+                height={192}
+                priority
+                className="h-32 w-32 object-cover grayscale contrast-125 sm:h-48 sm:w-48"
+              />
+              <span aria-hidden className="absolute -left-2 -top-2 h-5 w-5 border-l-2 border-t-2 border-[#FFB547]" />
+              <span aria-hidden className="absolute -bottom-2 -right-2 h-5 w-5 border-b-2 border-r-2 border-[#FFB547]" />
+            </div>
+            <p className={`text-xs ${MUTED}`}>
+              <span className={AMBER}>●</span> available_for_hire = true
+            </p>
+          </div>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
-
-      <div className="flex flex-wrap justify-center gap-8">
-        {content.list.map((item, index) => (
-          <div
-            key={index}
-            className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-gray-700 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2"
+          <Prompt cmd={cmd1} chars={n1} caret={d1 ? "none" : n1 > 0 ? "solid" : "blink"} />
+          <h1
+            data-text={c.hero.name}
+            className={`glitch mt-4 break-words text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl ${reveal(d1)}`}
+            style={{ textShadow: "0 0 24px rgba(255,181,71,.25)" }}
+            tabIndex={0}
           >
-            <div className="flex items-start justify-between mb-5">
-              <div className="p-3 bg-gray-700/70 rounded-lg">
-                <Award className="text-cyan-400" size={32} />
-              </div>
+            {c.hero.name}
+          </h1>
 
-              <span className="text-sm text-gray-400 bg-gray-700 px-3 py-1 rounded-full">
-                {item.year}
-              </span>
-            </div>
-
-            <h3 className="text-xl font-bold text-cyan-400 mb-1">
-              {item.title}
-            </h3>
-
-            <p className="text-sm text-gray-400 mb-3">{item.subtitle}</p>
-
-            <p className="text-white font-semibold mb-2">{item.issuer}</p>
-
-            <p className="text-sm text-gray-400 mb-4">{item.category}</p>
-
-            <p className="text-gray-300 mb-5">{item.description}</p>
-
-            <div className="border-t border-gray-700 pt-4 space-y-2">
-              <p className="text-sm text-gray-400">
-                Credential ID:
-                <span className="text-gray-300 ml-2">{item.credentialId}</span>
-              </p>
-
-              <p className="text-sm text-gray-400">
-                Registration Number:
-                <span className="text-gray-300 ml-2">
-                  {item.registrationNumber}
-                </span>
-              </p>
-            </div>
-
-            <a
-              href="https://1drv.ms/b/c/5f14395ce2292809/IQDpA6-jog1zRprGBpFDjWClAV_aa9vZPAO2PgB6j-4Ug1w?e=1lbYhy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors duration-300"
-            >
-              <Award size={18} />
-              View Certificate
-            </a>
+          <div className="mt-10">
+            <Prompt cmd={cmd2} chars={n2} visible={d1} caret={d1 && !d2 ? (n2 > 0 ? "solid" : "blink") : "none"} />
           </div>
-        ))}
-      </div>
-    </div>
-  </SectionWrapper>
-);
-const Skills = ({ content }) => (
-  <SectionWrapper id="skills" className="py-24">
-    <div className="container mx-auto px-6">
-      <h2 className="text-4xl font-bold text-center mb-4 text-white">
-        {content.title}
-      </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-12 rounded-full"></div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
-          <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-            <Code className="mr-3 text-cyan-400" /> {content.hard.title}
-          </h3>
-          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-center">
-            {content.hard.list.map((skill) => (
-              <div
-                key={skill.name}
-                className="group flex flex-col items-center p-4 bg-gray-700/50 rounded-lg transition-all duration-300 hover:bg-gray-700 hover:shadow-lg hover:shadow-cyan-500/10 transform hover:-translate-y-2"
-              >
-                <skill.icon />
-                <p className="mt-2 text-sm text-gray-300 group-hover:text-white transition-colors duration-300">
-                  {skill.name}
-                </p>
-              </div>
-            ))}
+          <div className={reveal(d2)}>
+            <p className="mt-4 max-w-[60ch] text-lg leading-relaxed sm:text-xl">{c.hero.title}</p>
+            <div className="mt-8 flex flex-wrap gap-3 text-sm">
+              <a href="#contact" className={`bg-[#FFB547] px-5 py-3 font-bold text-[#0A0C10] hover:bg-[#FFC873] ${focus}`}>
+                ./{c.hero.button.toLowerCase().replace(/\s+/g, "_")}
+              </a>
+              <a href={c.hero.cvUrl} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 border border-[#FFB547] px-5 py-3 ${AMBER} hover:bg-[#FFB547]/10 ${focus}`}>
+                <Download size={16} aria-hidden /> {t.cv}
+              </a>
+            </div>
           </div>
-        </div>
-        <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
-          <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-            <Brain className="mr-3 text-cyan-400" /> {content.soft.title}
-          </h3>
-          <ul className="space-y-4">
-            {content.soft.list.map((skill, i) => (
-              <li
-                key={i}
-                className="flex items-center text-gray-300 text-lg group"
-              >
-                <span className="h-2 w-2 bg-cyan-500 rounded-full mr-4"></span>
-                {skill}
+        </section>
+
+        <Cmd id="about" cmd="cat about.md" title={c.about.title}>
+          <p className="max-w-[64ch] font-[family-name:var(--font-sans)] text-lg leading-relaxed text-[#D8D4C6]">{c.about.description}</p>
+        </Cmd>
+
+        <Cmd id="education" cmd="cat education.txt" title={c.education.title}>
+          <h3 className="text-xl font-bold">{c.education.institution}</h3>
+          <p className={CYAN}>{c.education.major}</p>
+          <p className={`mt-1 text-sm ${MUTED}`}>{c.education.year}</p>
+          <p className={`mt-3 ${AMBER}`}>{c.education.gpa}</p>
+        </Cmd>
+
+        <Cmd id="experience" cmd="git log --stat ~/experience" title={c.experience.title}>
+          <div className="space-y-12">
+            <div>
+              <Sub>{c.experience.tabs[0]}</Sub>
+              <Log items={c.experience.work} />
+            </div>
+            <div>
+              <Sub>{c.experience.tabs[1]}</Sub>
+              <Log items={c.experience.projects} />
+            </div>
+            <div>
+              <Sub>
+                {c.experience.tabs[2]} &amp; {c.experience.tabs[3]}
+              </Sub>
+              <Log items={[...c.experience.organizations, ...c.experience.volunteers]} />
+            </div>
+          </div>
+        </Cmd>
+
+        <Cmd id="certifications" cmd="ls -l certs/" title={c.certifications.title}>
+          {c.certifications.list.map((it) => (
+            <div key={it.title} className="border border-[#232733] bg-[#10131A] p-5 sm:p-6">
+              <h3 className="text-lg font-bold">
+                {it.title} <span className={`text-sm font-normal ${MUTED}`}>({it.subtitle})</span>
+              </h3>
+              <p className={`mt-1 ${CYAN}`}>{it.issuer}</p>
+              <p className="mt-3 max-w-[64ch] font-[family-name:var(--font-sans)] leading-relaxed text-[#C9C5B8]">{it.description}</p>
+              <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 text-sm">
+                <dt className={MUTED}>year</dt>
+                <dd>{it.year}</dd>
+                <dt className={MUTED}>{t.cred}</dt>
+                <dd className="break-all">{it.credentialId}</dd>
+                <dt className={MUTED}>{t.reg}</dt>
+                <dd className="break-all">{it.registrationNumber}</dd>
+              </dl>
+              <a href={CERT_URL} target="_blank" rel="noopener noreferrer" className={`mt-5 inline-block text-sm ${AMBER} underline underline-offset-4 hover:text-[#FFC873] ${focus}`}>
+                ./{t.cert}
+              </a>
+            </div>
+          ))}
+        </Cmd>
+
+        <Cmd id="skills" cmd="npm ls --depth=0" title={c.skills.title}>
+          <Sub>{c.skills.hard.title}</Sub>
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
+            {c.skills.hard.list.map((s, i, arr) => (
+              <li key={s.name} className="flex items-center gap-2">
+                <span className={MUTED} aria-hidden>{i === arr.length - 1 ? "└─" : "├─"}</span>
+                <s.icon className={`h-4 w-4 shrink-0 ${CYAN}`} aria-hidden />
+                {s.name}
               </li>
             ))}
           </ul>
-        </div>
-      </div>
-    </div>
-  </SectionWrapper>
-);
+          <div className="mt-10">
+            <Sub>{c.skills.soft.title}</Sub>
+            <ul className="flex flex-wrap gap-2 text-sm">
+              {c.skills.soft.list.map((s) => (
+                <li key={s} className="border border-[#232733] px-3 py-1.5">{s}</li>
+              ))}
+            </ul>
+          </div>
+        </Cmd>
 
-const Contact = ({ content }) => (
-  <SectionWrapper id="contact" className="py-24">
-    <div className="container mx-auto px-6 text-center flex-grow flex flex-col items-center justify-center">
-      <h2 className="text-4xl font-bold text-white mb-4">{content.title}</h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
-      <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
-        {content.description}
-      </p>
-      <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-        <a
-          href={`mailto:${content.email}`}
-          className="text-lg text-cyan-400 hover:text-white transition-all duration-300 flex items-center gap-3 group transform hover:scale-105"
-        >
-          <Mail className="group-hover:text-cyan-400 transition-colors duration-300" />
-          <span>{content.email}</span>
-        </a>
-        <a
-          href="https://linkedin.com/in/ahmad-fauzan-roziqin"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-lg text-cyan-400 hover:text-white transition-all duration-300 flex items-center gap-3 group transform hover:scale-105"
-        >
-          <Linkedin className="group-hover:text-cyan-400 transition-colors duration-300" />
-          <span>ahmad-fauzan-roziqin</span>
-        </a>
-        <a
-          href="https://github.com/fafa123id"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-lg text-cyan-400 hover:text-white transition-all duration-300 flex items-center gap-3 group transform hover:scale-105"
-        >
-          <Github className="group-hover:text-cyan-400 transition-colors duration-300" />
-          <span>fafa123id</span>
-        </a>
-      </div>
-    </div>
-    <footer className="w-full text-center py-6 mt-24">
-      <p className="text-gray-500">
-        {content.footer} &copy; {new Date().getFullYear()}
-      </p>
-    </footer>
-  </SectionWrapper>
-);
+        <Cmd id="contact" cmd="./contact.sh --open" title={c.contact.title}>
+          <p className="max-w-[60ch] font-[family-name:var(--font-sans)] text-lg leading-relaxed text-[#D8D4C6]">{c.contact.description}</p>
+          <ul className="mt-6 space-y-3">
+            {[
+              { href: `mailto:${c.contact.email}`, icon: Mail, text: c.contact.email, label: "mail" },
+              { href: "https://linkedin.com/in/ahmad-fauzan-roziqin", icon: Linkedin, text: "ahmad-fauzan-roziqin", label: "linkedin" },
+              { href: "https://github.com/fafa123id", icon: Github, text: "fafa123id", label: "github" },
+            ].map((l) => (
+              <li key={l.label}>
+                <a href={l.href} target={l.label === "mail" ? undefined : "_blank"} rel="noopener noreferrer" className={`group inline-flex flex-wrap items-center gap-x-3 break-all ${focus}`}>
+                  <l.icon size={18} className={AMBER} aria-hidden />
+                  <span className={MUTED}>{l.label}</span>
+                  <span className="underline decoration-[#232733] underline-offset-4 group-hover:decoration-[#FFB547]">{l.text}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Cmd>
 
-// Komponen Utama App
-export default function App() {
-  const [language, setLanguage] = useState("id");
-  const [activeSection, setActiveSection] = useState("home");
-  const currentContent = content[language];
-  const isNavigating = useRef(false);
-  const scrollTimeout = useRef(null);
-  // Effect to scroll to top on page refresh
-  useEffect(() => {
-    // This forces the page to scroll to the top on refresh
-    window.history.scrollRestoration = "manual";
-  }, []);
-
-  // Effect to track which section is active in the viewport
-  useEffect(() => {
-    const handleIntersection = (entries) => {
-      // Jika kita sedang navigasi via klik, JANGAN lakukan apa-apa
-      if (isNavigating.current) {
-        return;
-      }
-
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, {
-      root: null,
-      rootMargin: "-40% 0px -40% 0px", // Zona aktivasi sedikit diperlebar
-      threshold: 0,
-    });
-
-    const sections = Object.keys(currentContent.nav).map((id) =>
-      document.getElementById(id),
-    );
-
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        if (section) observer.unobserve(section);
-      });
-    };
-  }, [currentContent.nav]);
-
-  return (
-    <div className="bg-gray-900 font-sans leading-normal tracking-tight text-white">
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <Header
-        lang={language}
-        setLang={setLanguage}
-        content={currentContent}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-        isNavigating={isNavigating}
-        scrollTimeout={scrollTimeout}
-      />
-
-      <main className="relative z-10">
-        <Hero content={currentContent.hero} />
-        <About content={currentContent.about} />
-        <Experience content={currentContent.experience} />
-        <Education content={currentContent.education} />
-        <Certifications content={currentContent.certifications} />
-        <Skills content={currentContent.skills} />
-        <Contact content={currentContent.contact} />
+        <footer className={`text-sm ${MUTED}`}>
+          <p>
+            <span className={MUTED}>$ </span>echo "{c.footer} © {new Date().getFullYear()}"
+            <Cursor />
+          </p>
+        </footer>
       </main>
+      </Ready.Provider>
+
+      {/* status bar ala tmux */}
+      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-50 flex items-stretch bg-[#FFB547] pb-[env(safe-area-inset-bottom)] text-xs text-[#0A0C10] sm:text-sm">
+        <span className="hidden bg-[#0A0C10] px-3 py-2 font-bold text-[#FFB547] sm:block">[portfolio]</span>
+        <ul className="flex min-w-0 flex-1 overflow-x-auto">
+          {navKeys.map((k, i) => (
+            <li key={k} className="shrink-0">
+              <a
+                href={`#${k}`}
+                onClick={() => goTo(k)}
+                aria-current={active === k ? "true" : undefined}
+                className={`block px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0A0C10] ${
+                  active === k ? "bg-[#0A0C10] font-bold text-[#FFB547]" : "hover:bg-[#FFC873]"
+                }`}
+              >
+                {i}:{c.nav[k].toLowerCase()}
+                {active === k ? "*" : ""}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="flex shrink-0 items-center gap-1 px-2">
+          {["id", "en"].map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLang(l)}
+              aria-pressed={lang === l}
+              className={`px-2 py-1 font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0A0C10] ${lang === l ? "bg-[#0A0C10] text-[#FFB547]" : "hover:bg-[#FFC873]"}`}
+            >
+              {l}
+            </button>
+          ))}
+          <span className="ml-2 hidden tabular-nums md:inline">{clock}</span>
+        </div>
+      </nav>
 
       <style jsx global>{`
-        /* Allow body to scroll naturally */
-        html {
-          scroll-behavior: smooth;
+        html { background: #0a0c10; }
+        @media (prefers-reduced-motion: no-preference) {
+          html { scroll-behavior: smooth; }
+          .blink { animation: blink 1s steps(1) infinite; }
+          .caret-blink { animation: caretblink 1s steps(1) infinite; }
+          .glitch:hover::before, .glitch:focus-visible::before { animation: gl1 0.5s steps(2) infinite; }
+          .glitch:hover::after, .glitch:focus-visible::after { animation: gl2 0.5s steps(2) infinite; }
+          .scan { animation: drift 8s linear infinite; }
         }
-        .bg-grid-pattern {
-          background-image:
-            linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-            linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.05) 1px,
-              transparent 1px
-            );
-          background-size: 2rem 2rem;
+        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes caretblink { 50% { border-right-color: transparent; } }
+        @keyframes drift { to { background-position-y: 12px; } }
+        @keyframes gl1 { 0% { transform: translate(2px, 0); } 50% { transform: translate(-3px, 1px); } }
+        @keyframes gl2 { 0% { transform: translate(-2px, 0); } 50% { transform: translate(3px, -1px); } }
+        .glitch { position: relative; outline: none; }
+        .glitch::before, .glitch::after {
+          content: attr(data-text); position: absolute; inset: 0; opacity: 0; pointer-events: none;
         }
-        .animate-blob {
-          animation: blob 7s infinite;
+        .glitch:hover::before, .glitch:focus-visible::before { opacity: 0.85; color: #5ce1e6; clip-path: inset(0 0 55% 0); }
+        .glitch:hover::after, .glitch:focus-visible::after { opacity: 0.85; color: #ff5c7a; clip-path: inset(55% 0 0 0); }
+        .scan {
+          opacity: 0.05;
+          background: repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 4px);
         }
-        .animation-delay-4000 {
-          animation-delay: -4s;
-        }
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
+        .vig { background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55)); }
       `}</style>
     </div>
   );
